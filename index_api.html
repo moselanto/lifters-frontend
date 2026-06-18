@@ -1,0 +1,165 @@
+<\!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lifters SACCO System (API Mode)</title>
+<style>
+:root{--navy:#1f3864;--navy2:#2e5496;--green:#16a766;--green2:#0f7a4a;--amber:#d9a300;--red:#d64545;--bg:#f4f6fb;--card:#fff;--line:#e3e8f0;--text:#1f2937;--muted:#6b7280}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',system-ui,Arial,sans-serif}
+body{background:var(--bg);color:var(--text)}
+#login{position:fixed;inset:0;background:linear-gradient(135deg,var(--navy),#0f1d38);display:flex;align-items:center;justify-content:center;z-index:100;padding:16px}
+.loginbox{background:#fff;border-radius:16px;padding:32px;width:380px;max-width:94vw;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.loginbox .logo{width:54px;height:54px;border-radius:13px;background:var(--green);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:24px;margin:0 auto 14px}
+.loginbox h2{text-align:center;color:var(--navy);font-size:18px}.loginbox p{text-align:center;color:var(--muted);font-size:12.5px;margin-bottom:14px}
+.loginbox label{display:block;font-size:12px;color:var(--muted);margin:10px 0 4px;font-weight:600}
+.loginbox input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:9px;font-size:13px;outline:none}
+.loginbox .btn{width:100%;margin-top:16px}.hint{font-size:11px;color:var(--muted);text-align:center;margin-top:10px}
+.err{color:var(--red);font-size:12px;text-align:center;margin-top:8px;min-height:16px}
+.apibar{display:flex;gap:6px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:6px 9px;margin-bottom:6px}
+.apibar input{border:none;background:transparent;font-size:12px;flex:1;outline:none}
+.dot{width:9px;height:9px;border-radius:50%;background:#bbb}.dot.ok{background:var(--green)}.dot.bad{background:var(--red)}
+.app{display:none}.app.on{display:flex;min-height:100vh}
+.sidebar{width:235px;background:linear-gradient(180deg,var(--navy),#162a4d);color:#fff;position:fixed;inset:0 auto 0 0;display:flex;flex-direction:column;z-index:30}
+.brand{padding:18px;border-bottom:1px solid rgba(255,255,255,.12);display:flex;align-items:center;gap:10px}
+.brand .logo{width:36px;height:36px;border-radius:9px;background:var(--green);display:flex;align-items:center;justify-content:center;font-weight:800}
+.brand h1{font-size:14px}.brand small{color:#9fb3d8;font-size:11px;font-weight:400}
+.nav a{display:flex;gap:11px;padding:11px 18px;color:#cdd8ef;font-size:13.5px;cursor:pointer;border-left:3px solid transparent}
+.nav a:hover{background:rgba(255,255,255,.06);color:#fff}.nav a.active{background:rgba(22,167,102,.16);border-left-color:var(--green);color:#fff;font-weight:600}
+.main{margin-left:235px;flex:1;display:flex;flex-direction:column;min-width:0}
+.topbar{height:60px;background:var(--card);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 22px;position:sticky;top:0;z-index:20}
+.topbar .ttl{font-size:18px;font-weight:700;color:var(--navy)}
+.topbar .right{display:flex;align-items:center;gap:12px}
+.mode{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px}.mode.api{background:#e6f6ee;color:var(--green2)}.mode.demo{background:#fff6e0;color:#a6790a}
+.cur{display:flex;gap:6px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:13px}
+.cur select{border:none;background:transparent;font-weight:600;color:var(--navy);cursor:pointer;outline:none}
+.lo{background:none;border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:12px;cursor:pointer;color:var(--muted)}
+.content{padding:22px;max-width:1240px;width:100%}
+.kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:15px;margin-bottom:20px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:15px 17px;position:relative;overflow:hidden}
+.kpi .lab{color:var(--muted);font-size:12px;margin-bottom:5px}.kpi .val{font-size:21px;font-weight:800;color:var(--navy)}
+.kpi .bar{position:absolute;left:0;top:0;bottom:0;width:5px}.kpi.g .bar{background:var(--green)}.kpi.n .bar{background:var(--navy2)}.kpi.a .bar{background:var(--amber)}.kpi.r .bar{background:var(--red)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:18px;margin-bottom:18px}
+.panel h3{font-size:14px;color:var(--navy);margin-bottom:14px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;padding:10px;border-bottom:2px solid var(--line)}
+td{padding:10px;border-bottom:1px solid var(--line)}tr:hover td{background:#fafbfe}
+.right{text-align:right}.b{font-weight:700}
+.tag{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px}.tag.cont{background:#e6f6ee;color:var(--green2)}.tag.exit{background:#fdeaea;color:var(--red)}.tag.join{background:#fff6e0;color:#a6790a}
+.btn{background:var(--green);color:#fff;border:none;padding:9px 15px;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer}.btn.gray{background:#e3e8f0;color:var(--navy)}
+.banner{font-size:12.5px;padding:9px 14px;border-radius:9px;margin-bottom:16px}
+.banner.api{background:#e6f6ee;border:1px solid #b6e3cc;color:#0f7a4a}.banner.demo{background:#fff6e0;border:1px solid #f0d98a;color:#7a5b00}
+.mini{font-size:11px;color:var(--muted)}
+@media(max-width:760px){.sidebar{display:none}.main{margin-left:0}}
+</style></head><body>
+
+<div id="login"><div class="loginbox">
+  <div class="logo">L</div><h2>Lifters Investment Group</h2><p>SACCO System - API Mode</p>
+  <div class="apibar"><span class="dot" id="dot"></span><input id="apibase" placeholder="API base URL" value="http://localhost:4000"><button class="btn gray" style="padding:5px 9px;margin:0" onclick="ping()">Test</button></div>
+  <label>Login ID</label><input id="lg_id" value="admin">
+  <label>Password</label><input id="lg_pw" type="password" value="Lifters@2026">
+  <button class="btn" onclick="doLogin()">Sign In</button>
+  <div class="err" id="err"></div>
+  <div class="hint">Connects to your backend. If unreachable, you can <a href="#" onclick="demoLogin();return false">continue in demo mode</a> (local data).</div>
+</div></div>
+
+<div class="app" id="app">
+<aside class="sidebar"><div class="brand"><div class="logo">L</div><div><h1>Lifters Group</h1><small>SACCO System</small></div></div>
+<nav class="nav">
+  <a data-page="dashboard" class="active">&#9632; Dashboard</a>
+  <a data-page="members">&#128101; Members</a>
+  <a data-page="savings">&#128176; Savings</a>
+  <a data-page="loans">&#127974; Loans</a>
+</nav></aside>
+<div class="main"><div class="topbar"><div class="ttl" id="ptitle">Dashboard</div>
+  <div class="right"><span class="mode" id="modeBadge">-</span>
+    <div class="cur">Currency<select id="cur" onchange="setCur(this.value)"><option>GBP</option><option>USD</option><option>KES</option></select></div>
+    <button class="lo" onclick="logout()">Logout</button></div></div>
+  <div class="content" id="content"></div>
+</div></div>
+
+<script src="api.js"></script>
+<script>
+const SEED={"members": [{"id": "001", "name": "Jane Ngarari", "status": "Continuing", "phone": "", "email": "", "national_id": "", "nok": "", "date_joined": "2023-11-01", "welfare": 210, "savings": [{"date": "2026-06-01", "amount": 3200, "receipt": "OPEN-001", "type": "contribution"}], "dividend": 184}, {"id": "002", "name": "Anthony Mwangi", "status": "Continuing", "phone": "", "email": "", "national_id": "", "nok": "", "date_joined": "2023-11-01", "welfare": 200, "savings": [{"date": "2026-06-01", "amount": 3100, "receipt": "OPEN-002", "type": "contribution"}], "dividend": 184}, {"id": "003", "name": "Purity Gekara", "status": "Continuing", "phone": "", "email": "", "national_id": "", "nok": "", "date_joined": "2023-11-01", "welfare": 190, "savings": [{"date": "2026-06-01", "amount": 3200, "receipt": "OPEN-003", "type": "contribution"}], "dividend": 184}, {"id": "004", "name": "Wanja Mbarire", "status": "Continuing", "phone": "", "email": "", "national_id": "", "nok": "", "date_joined": "2023-11-01", "welfare": 210, "savings": [{"date": "2026-06-01", "amount": 3200, "receipt": "OPEN-004", "type": "contribution"}], "dividend": 184}, {"id": "005", "name": "Margaret Mwangi", "status": "Continuing", "phone": "", "email": "", "national_id": "", "nok": "", "date_joined": "2023-11-01", "welfare": 200, "savings": [{"date": "2026-06-01", "amount": 3100, "receipt": "OPEN-005", "type": "contribution"}], "dividend": 184}, {"id": "006", "name": "Susan Mate", "status": "Continuing", "phone": "", "email": "", "national_id": "", "nok": "", "date_joined": "2023-11-01", "welfare": 210, "savings": [{"date": "2026-06-01", "amount": 3200, "receipt": "OPEN-006", "type": "contribution"}], "dividend": 184}, {"id": "007", "name": "Justus Nyangi", "status": "Exited 2025", "phone": "", "email": "", "national_id": "", "nok": "", "date_joined": "2023-11-01", "welfare": 150, "savings": [{"date": "2026-06-01", "amount": 2600, "receipt": "OPEN-007", "type": "contribution"}], "dividend": 184}, {"id": "008", "name": "Milcah Nyangi", "status": "Exited 2025", "phone": "", "email": "", "national_id": "", "nok": "", "date_joined": "2023-11-01", "welfare": 150, "savings": [{"date": "2026-06-01", "amount": 2461.2, "receipt": "OPEN-008", "type": "contribution"}], "dividend": 184}, {"id": "009", "name": "Lucy Hunja", "status": "Continuing", "phone": "", "email": "", "national_id": "", "nok": "", "date_joined": "2023-11-01", "welfare": 210, "savings": [{"date": "2026-06-01", "amount": 3200, "receipt": "OPEN-009", "type": "contribution"}], "dividend": 184}, {"id": "010", "name": "Lydiah Kasera", "status": "Continuing", "phone": "", "email": "", "national_id": "", "nok": "", "date_joined": "2023-11-01", "welfare": 210, "savings": [{"date": "2026-06-01", "amount": 3200, "receipt": "OPEN-010", "type": "contribution"}], "dividend": 184}, {"id": "011", "name": "Jamika Global", "status": "Continuing", "phone": "", "email": "", "national_id": "", "nok": "", "date_joined": "2023-11-01", "welfare": 210, "savings": [{"date": "2026-06-01", "amount": 3200, "receipt": "OPEN-011", "type": "contribution"}], "dividend": 184}, {"id": "012", "name": "Charity Mwaniki", "status": "Continuing", "phone": "", "email": "", "national_id": "", "nok": "", "date_joined": "2023-11-01", "welfare": 210, "savings": [{"date": "2026-06-01", "amount": 3200, "receipt": "OPEN-012", "type": "contribution"}], "dividend": 184}, {"id": "013", "name": "Lucy Smith", "status": "Continuing", "phone": "", "email": "", "national_id": "", "nok": "", "date_joined": "2023-11-01", "welfare": 210, "savings": [{"date": "2026-06-01", "amount": 3200, "receipt": "OPEN-013", "type": "contribution"}], "dividend": 184}, {"id": "014", "name": "Nomis 1", "status": "Continuing", "phone": "", "email": "", "national_id": "", "nok": "", "date_joined": "2023-11-01", "welfare": 200, "savings": [{"date": "2026-06-01", "amount": 3100, "receipt": "OPEN-014", "type": "contribution"}], "dividend": 184}, {"id": "015", "name": "Nomis 2", "status": "Continuing", "phone": "", "email": "", "national_id": "", "nok": "", "date_joined": "2023-11-01", "welfare": 210, "savings": [{"date": "2026-06-01", "amount": 3200, "receipt": "OPEN-015", "type": "contribution"}], "dividend": 184}, {"id": "016", "name": "Lucy Hunja 2", "status": "Joined 2026", "phone": "", "email": "", "national_id": "", "nok": "", "date_joined": "2026-01-01", "welfare": 60, "savings": [{"date": "2026-06-01", "amount": 2100, "receipt": "OPEN-016", "type": "contribution"}], "dividend": 0}, {"id": "017", "name": "Rachel Mirindo", "status": "Joined 2026", "phone": "", "email": "", "national_id": "", "nok": "", "date_joined": "2026-01-01", "welfare": 50, "savings": [{"date": "2026-06-01", "amount": 1850, "receipt": "OPEN-017", "type": "contribution"}], "dividend": 0}], "loans": [{"loan_no": "L001-01", "member_id": "001", "member": "Jane Ngarari", "type": "normal", "principal": 1790, "rate": 10, "mode": "upfront_deduct", "interest": 179, "net": 1611, "status": "repaying", "disbursed": "2024-11-01", "repayments": [{"date": "2026-06-01", "amount": 1402, "receipt": "REP-001", "penalty": 0}]}, {"loan_no": "L002-01", "member_id": "002", "member": "Anthony Mwangi", "type": "normal", "principal": 2253, "rate": 10, "mode": "upfront_deduct", "interest": 225.3, "net": 2027.7, "status": "repaying", "disbursed": "2024-11-01", "repayments": [{"date": "2026-06-01", "amount": 300, "receipt": "REP-002", "penalty": 0}]}, {"loan_no": "L003-01", "member_id": "003", "member": "Purity Gekara", "type": "normal", "principal": 2500, "rate": 10, "mode": "upfront_deduct", "interest": 250, "net": 2250, "status": "repaying", "disbursed": "2024-11-01", "repayments": [{"date": "2026-06-01", "amount": 2000, "receipt": "REP-003", "penalty": 0}]}, {"loan_no": "L004-01", "member_id": "004", "member": "Wanja Mbarire", "type": "normal", "principal": 3578, "rate": 10, "mode": "upfront_deduct", "interest": 357.8, "net": 3220.2, "status": "completed", "disbursed": "2024-11-01", "repayments": [{"date": "2026-06-01", "amount": 3580, "receipt": "REP-004", "penalty": 0}]}, {"loan_no": "L006-01", "member_id": "006", "member": "Susan Mate", "type": "normal", "principal": 4528, "rate": 10, "mode": "upfront_deduct", "interest": 452.8, "net": 4075.2, "status": "completed", "disbursed": "2024-11-01", "repayments": [{"date": "2026-06-01", "amount": 4528, "receipt": "REP-006", "penalty": 0}]}, {"loan_no": "L007-01", "member_id": "007", "member": "Justus Nyangi", "type": "normal", "principal": 4365, "rate": 10, "mode": "upfront_deduct", "interest": 436.5, "net": 3928.5, "status": "completed", "disbursed": "2024-11-01", "repayments": [{"date": "2026-06-01", "amount": 4365, "receipt": "REP-007", "penalty": 0}]}, {"loan_no": "L008-01", "member_id": "008", "member": "Milcah Nyangi", "type": "normal", "principal": 3555, "rate": 10, "mode": "upfront_deduct", "interest": 355.5, "net": 3199.5, "status": "completed", "disbursed": "2024-11-01", "repayments": [{"date": "2026-06-01", "amount": 3555, "receipt": "REP-008", "penalty": 0}]}, {"loan_no": "L009-01", "member_id": "009", "member": "Lucy Hunja", "type": "normal", "principal": 1550, "rate": 10, "mode": "upfront_deduct", "interest": 155, "net": 1395, "status": "completed", "disbursed": "2024-11-01", "repayments": [{"date": "2026-06-01", "amount": 1550, "receipt": "REP-009", "penalty": 0}]}, {"loan_no": "L010-01", "member_id": "010", "member": "Lydiah Kasera", "type": "normal", "principal": 2697, "rate": 10, "mode": "upfront_deduct", "interest": 269.7, "net": 2427.3, "status": "repaying", "disbursed": "2024-11-01", "repayments": [{"date": "2026-06-01", "amount": 1857, "receipt": "REP-010", "penalty": 0}]}, {"loan_no": "L011-01", "member_id": "011", "member": "Jamika Global", "type": "normal", "principal": 1800, "rate": 10, "mode": "upfront_deduct", "interest": 180, "net": 1620, "status": "repaying", "disbursed": "2024-11-01", "repayments": [{"date": "2026-06-01", "amount": 1763, "receipt": "REP-011", "penalty": 0}]}, {"loan_no": "L013-01", "member_id": "013", "member": "Lucy Smith", "type": "normal", "principal": 4700, "rate": 10, "mode": "upfront_deduct", "interest": 470, "net": 4230, "status": "repaying", "disbursed": "2024-11-01", "repayments": [{"date": "2026-06-01", "amount": 3834, "receipt": "REP-013", "penalty": 0}]}, {"loan_no": "L014-01", "member_id": "014", "member": "Nomis 1", "type": "normal", "principal": 1050, "rate": 10, "mode": "upfront_deduct", "interest": 105, "net": 945, "status": "completed", "disbursed": "2024-11-01", "repayments": [{"date": "2026-06-01", "amount": 1050, "receipt": "REP-014", "penalty": 0}]}, {"loan_no": "L015-01", "member_id": "015", "member": "Nomis 2", "type": "normal", "principal": 1050, "rate": 10, "mode": "upfront_deduct", "interest": 105, "net": 945, "status": "repaying", "disbursed": "2024-11-01", "repayments": [{"date": "2026-06-01", "amount": 630, "receipt": "REP-015", "penalty": 0}]}], "settings": {"mode": "upfront_deduct", "rate": 10, "penalty": 5}, "investments": [{"name": "I&M Money Market Fund", "type": "mmf", "amount": 36233.0, "fee": 443.43, "date": "2025-02-17", "status": "active"}], "expenses": [{"cat": "administration", "desc": "Accountant fees", "amount": 520.0, "date": "2025-12-31"}, {"cat": "welfare", "desc": "Welfare transfers (JN, Wanja, Justus & Milcah)", "amount": 1200.0, "date": "2025-12-31"}, {"cat": "membership", "desc": "Terminations (Justus & Milcah)", "amount": 3895.39, "date": "2025-12-31"}]};
+const RATES={GBP:1,USD:1.27,KES:172},SYM={GBP:'\u00A3',USD:'$',KES:'KSh '};let CUR='GBP';
+function money(g){return SYM[CUR]+((g||0)*RATES[CUR]).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});}
+function setCur(c){CUR=c;render(page);}
+let MODE='demo'; // 'api' or 'demo'
+let STATE={members:[],loans:[]};
+let page='dashboard';
+const titles={dashboard:'Dashboard',members:'Members',savings:'Savings',loans:'Loans'};
+
+document.getElementById('apibase').value = (window.LIFTERS_API_BASE||'http://localhost:4000');
+async function ping(){
+ window.LIFTERS_API_BASE=document.getElementById('apibase').value.trim();
+ const dot=document.getElementById('dot');
+ try{ const r=await fetch(window.LIFTERS_API_BASE+'/health'); const ok=r.ok; dot.className='dot '+(ok?'ok':'bad'); return ok; }
+ catch{ dot.className='dot bad'; return false; }
+}
+async function doLogin(){
+ window.LIFTERS_API_BASE=document.getElementById('apibase').value.trim();
+ const err=document.getElementById('err');err.textContent='';
+ try{
+   await Api.login(document.getElementById('lg_id').value, document.getElementById('lg_pw').value);
+   MODE='api'; await loadFromApi(); enterApp('API');
+ }catch(e){ err.textContent=e.message+'  (or use demo mode below)'; }
+}
+function demoLogin(){ MODE='demo'; STATE=normalizeSeed(); enterApp('DEMO'); }
+function enterApp(label){
+ document.getElementById('login').style.display='none';document.getElementById('app').classList.add('on');
+ const b=document.getElementById('modeBadge');b.textContent=label+' MODE';b.className='mode '+(label==='API'?'api':'demo');
+ render('dashboard');
+}
+function logout(){ if(MODE==='api')Api.logout(); document.getElementById('app').classList.remove('on');document.getElementById('login').style.display='flex'; }
+
+function normalizeSeed(){
+ // map the demo seed into the same shape we use from the API
+ const members=SEED.members.map(m=>({id:m.id,member_no:m.id,full_name:m.name,status:m.status,
+   savings:m.savings.reduce((a,s)=>a+(s.type==='fine'?-s.amount:s.amount),0),welfare:m.welfare,dividend:m.dividend||0}));
+ const loans=SEED.loans.map(l=>({loan_no:l.loan_no,member:l.member,principal:l.principal,interest:l.interest,
+   net:l.net,repaid:l.repayments.reduce((a,r)=>a+r.amount,0),balance:l.principal-l.repayments.reduce((a,r)=>a+r.amount,0)}));
+ return {members,loans};
+}
+async function loadFromApi(){
+ // pull members + savings balances + loans and merge into STATE
+ const [members, balances, loans] = await Promise.all([Api.members(), Api.savingsBalances(), Api.loans()]);
+ const balById={}; balances.forEach(b=>balById[b.member_id]=Number(b.savings_balance||0));
+ STATE.members = members.map(m=>({id:m.id,member_no:m.member_no,full_name:m.full_name,status:m.status,
+   savings:balById[m.id]||0,welfare:0,dividend:0}));
+ STATE.loans = loans.map(l=>({loan_no:l.loan_no,member:l.member_id,principal:Number(l.principal),
+   interest:Number(l.interest_amount),net:Number(l.net_disbursed),repaid:Number(l.repaid||0),balance:Number(l.balance||0)}));
+}
+
+function statusTag(s){if((s||'').indexOf('xit')>=0||s==='exited')return '<span class="tag exit">Exited</span>';if((s||'').indexOf('oin')>=0||s==='new')return '<span class="tag join">New</span>';return '<span class="tag cont">Continuing</span>';}
+const sum=(arr,f)=>arr.reduce((a,x)=>a+(f(x)||0),0);
+function kpi(c,l,v){return `<div class="kpi ${c}"><div class="bar"></div><div class="lab">${l}</div><div class="val">${v}</div></div>`;}
+
+function dashboard(){
+ const t={contrib:sum(STATE.members,m=>m.savings),welfare:sum(STATE.members,m=>m.welfare),
+   balance:sum(STATE.loans,l=>l.balance),interest:sum(STATE.loans,l=>l.interest)};
+ return `<div class="banner ${MODE}">${MODE==='api'?'&#9989; Connected to the live backend API - data is shared across all users.':'&#9888; Demo mode - using local sample data (backend not connected).'}</div>
+ <div class="kpis">${kpi('n','Total Members',STATE.members.length)}${kpi('g','Total Savings',money(t.contrib))}${kpi('a','Outstanding Loans',money(t.balance))}${kpi('n','Loan Interest',money(t.interest))}</div>
+ <div class="panel"><h3>Members</h3><table><thead><tr><th>ID</th><th>Member</th><th>Status</th><th class="right">Savings</th></tr></thead><tbody>
+ ${STATE.members.slice(0,10).map(m=>`<tr><td>${m.member_no}</td><td class="b">${m.full_name}</td><td>${statusTag(m.status)}</td><td class="right">${money(m.savings)}</td></tr>`).join('')}
+ </tbody></table></div>`;
+}
+function membersPage(){
+ return `<div class="panel"><h3>Members (${STATE.members.length})</h3><table><thead><tr><th>ID</th><th>Member</th><th>Status</th><th class="right">Savings</th></tr></thead><tbody>
+ ${STATE.members.map(m=>`<tr><td>${m.member_no}</td><td class="b">${m.full_name}</td><td>${statusTag(m.status)}</td><td class="right">${money(m.savings)}</td></tr>`).join('')}
+ </tbody></table></div>`;
+}
+function savingsPage(){
+ const tot=sum(STATE.members,m=>m.savings);
+ return `<div class="kpis">${kpi('g','Total Savings',money(tot))}</div>
+ <div class="panel"><table><thead><tr><th>ID</th><th>Member</th><th class="right">Savings</th></tr></thead><tbody>
+ ${STATE.members.map(m=>`<tr><td>${m.member_no}</td><td class="b">${m.full_name}</td><td class="right">${money(m.savings)}</td></tr>`).join('')}
+ </tbody></table></div>`;
+}
+function loansPage(){
+ return `<div class="kpis">${kpi('n','Total Principal',money(sum(STATE.loans,l=>l.principal)))}${kpi('g','Repaid',money(sum(STATE.loans,l=>l.repaid)))}${kpi('a','Outstanding',money(sum(STATE.loans,l=>l.balance)))}</div>
+ <div class="panel"><table><thead><tr><th>Loan</th><th class="right">Principal</th><th class="right">Interest</th><th class="right">Repaid</th><th class="right">Balance</th></tr></thead><tbody>
+ ${STATE.loans.map(l=>`<tr><td>${l.loan_no}</td><td class="right">${money(l.principal)}</td><td class="right">${money(l.interest)}</td><td class="right">${money(l.repaid)}</td><td class="right b">${money(l.balance)}</td></tr>`).join('')}
+ </tbody></table></div>`;
+}
+const pages={dashboard,members:membersPage,savings:savingsPage,loans:loansPage};
+function render(p){page=p;document.getElementById('content').innerHTML=pages[p]();document.getElementById('ptitle').textContent=titles[p];}
+document.querySelectorAll('.nav a').forEach(a=>a.addEventListener('click',()=>{document.querySelectorAll('.nav a').forEach(x=>x.classList.remove('active'));a.classList.add('active');render(a.dataset.page);}));
+ping();
+</script></body></html>
