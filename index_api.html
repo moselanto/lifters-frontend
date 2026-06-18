@@ -52,7 +52,7 @@ td{padding:10px;border-bottom:1px solid var(--line)}tr:hover td{background:#fafb
 
 <div id="login"><div class="loginbox">
   <div class="logo">L</div><h2>Lifters Investment Group</h2><p>SACCO System - API Mode</p>
-  <div class="apibar"><span class="dot" id="dot"></span><input id="apibase" placeholder="API base URL" value="http://localhost:4000"><button class="btn gray" style="padding:5px 9px;margin:0" onclick="ping()">Test</button></div>
+  <div class="apibar"><span class="dot" id="dot"></span><input id="apibase" placeholder="API base URL" value="https://lifters-backend.onrender.com"><button class="btn gray" style="padding:5px 9px;margin:0" onclick="ping()">Test</button></div>
   <label>Login ID</label><input id="lg_id" value="admin">
   <label>Password</label><input id="lg_pw" type="password" value="Lifters@2026">
   <button class="btn" onclick="doLogin()">Sign In</button>
@@ -86,7 +86,7 @@ let STATE={members:[],loans:[]};
 let page='dashboard';
 const titles={dashboard:'Dashboard',members:'Members',savings:'Savings',loans:'Loans'};
 
-document.getElementById('apibase').value = (window.LIFTERS_API_BASE||'http://localhost:4000');
+document.getElementById('apibase').value = (window.LIFTERS_API_BASE||'https://lifters-backend.onrender.com');
 async function ping(){
  window.LIFTERS_API_BASE=document.getElementById('apibase').value.trim();
  const dot=document.getElementById('dot');
