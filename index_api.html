@@ -1,4 +1,4 @@
-<\!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lifters SACCO System (API Mode)</title>
 <style>
@@ -221,7 +221,7 @@ function expensesPage(){
 function profitPage(){
  return `<div class="panel"><h3>Profit Sharing</h3>
  <div class="section-actions"><div class="mini">Distribute loan interest as dividends.</div></div>
- <div class="calc" style="margin-bottom:12px"><div><span>Loan interest earned</span><b>${money(sum(DATA.loans,l=>l.interest))}</b></div><div><span>Eligible members</span><b>${DATA.members.filter(m=>(m.status||'').toLowerCase().indexOf('join')<0&&(m.status||'').toLowerCase()\!=='new').length}</b></div></div>
+ <div class="calc" style="margin-bottom:12px"><div><span>Loan interest earned</span><b>${money(sum(DATA.loans,l=>l.interest))}</b></div><div><span>Eligible members</span><b>${DATA.members.filter(m=>(m.status||'').toLowerCase().indexOf('join')<0&&(m.status||'').toLowerCase()!=='new').length}</b></div></div>
  <div class="field"><label>Method</label><select id="pf_method"><option value="equal">Equal</option><option value="share_based">Share-based</option><option value="savings_based">Savings-based</option></select></div>
  <div class="field"><label>Total Pool (GBP)</label><input id="pf_pool" type="number" value="2760"></div>
  <button class="btn" onclick="distribute()">Distribute Profit</button></div>`;
@@ -248,7 +248,7 @@ function myaccount(){
 }
 function myloans(){
  const myLoans=DATA.loans.filter(l=>l.member_id===MEMBERID);
- if(\!myLoans.length)return '<div class="panel"><h3>My Loans</h3><div class="mini">You have no loans on record.</div></div>';
+ if(!myLoans.length)return '<div class="panel"><h3>My Loans</h3><div class="mini">You have no loans on record.</div></div>';
  return myLoans.map(l=>`<div class="panel"><h3>${l.no} ${l.balance<=0?'<span class="tag ok">Cleared</span>':'<span class="tag out">Outstanding</span>'}</h3>
   <div class="calc"><div><span>Principal</span><b>${money(l.principal)}</b></div><div><span>Interest</span><b>${money(l.interest)}</b></div><div><span>Net received</span><b>${money(l.net)}</b></div><div><span>Repaid</span><b>${money(l.repaid)}</b></div><div><span>Balance</span><b>${money(l.balance)}</b></div></div></div>`).join('');
 }
@@ -256,7 +256,7 @@ const pages={dashboard,members:membersPage,savings:savingsPage,welfare:welfarePa
 function render(p){page=p;const fn=pages[p]||dashboard;document.getElementById('content').innerHTML=fn();document.getElementById('ptitle').textContent=titles[p]||'Dashboard';}
 
 // ---------- actions (API writes; demo shows a notice) ----------
-function needApi(){ if(MODE\!=='api'){toast('Demo mode - connect to the backend to save changes');return false;} return true; }
+function needApi(){ if(MODE!=='api'){toast('Demo mode - connect to the backend to save changes');return false;} return true; }
 async function reloadAndRender(){ await loadAll(); render(page); }
 
 function changePwModal(){
@@ -268,13 +268,13 @@ function changePwModal(){
 }
 async function saveChangePw(){
  const o=document.getElementById('cp_old').value,n=document.getElementById('cp_new').value,n2=document.getElementById('cp_new2').value;
- if(\!n||n.length<6){toast('New password must be at least 6 characters');return;}
- if(n\!==n2){toast('New passwords do not match');return;}
- if(MODE\!=='api'){toast('Demo mode - password change needs the live backend');return;}
+ if(!n||n.length<6){toast('New password must be at least 6 characters');return;}
+ if(n!==n2){toast('New passwords do not match');return;}
+ if(MODE!=='api'){toast('Demo mode - password change needs the live backend');return;}
  try{ await Api.post('/auth/change-password',{old_password:o,new_password:n}); closeModal(); toast('Password updated successfully'); }
  catch(e){ toast(e.message); }
 }
-function memberModal(){ if(\!needApi())return; const nid='';
+function memberModal(){ if(!needApi())return; const nid='';
  openModal(`<h3>Add Member</h3>
   <div class="field"><label>Member No</label><input id="m_no" placeholder="e.g. 018"></div>
   <div class="field"><label>Full Name</label><input id="m_name"></div>
@@ -283,7 +283,7 @@ function memberModal(){ if(\!needApi())return; const nid='';
   <div class="modal-actions"><button class="btn gray" onclick="closeModal()">Cancel</button><button class="btn" onclick="saveMember()">Save</button></div>`);
 }
 async function saveMember(){try{await Api.createMember({member_no:document.getElementById('m_no').value,full_name:document.getElementById('m_name').value,phone:document.getElementById('m_phone').value,status:document.getElementById('m_status').value});closeModal();toast('Member added');await reloadAndRender();}catch(e){toast(e.message);}}
-function contribModal(){ if(\!needApi())return;
+function contribModal(){ if(!needApi())return;
  openModal(`<h3>Record Contribution</h3>
   <div class="field"><label>Member</label><select id="c_mem">${DATA.members.map(m=>`<option value="${m.id}">${m.no} - ${m.name}</option>`).join('')}</select></div>
   <div class="field"><label>Amount (GBP)</label><input id="c_amt" type="number" value="100"></div>
@@ -291,7 +291,7 @@ function contribModal(){ if(\!needApi())return;
   <div class="modal-actions"><button class="btn gray" onclick="closeModal()">Cancel</button><button class="btn" onclick="saveContrib()">Save</button></div>`);
 }
 async function saveContrib(){try{const d=document.getElementById('c_date').value;await Api.recordContribution({member_id:document.getElementById('c_mem').value,txn_date:d,period_month:d.slice(0,8)+'01',amount:+document.getElementById('c_amt').value,type:'contribution',receipt_no:'RC-'+Date.now().toString().slice(-5)});closeModal();toast('Contribution recorded');await reloadAndRender();}catch(e){toast(e.message);}}
-function welfareModal(){ if(\!needApi())return;
+function welfareModal(){ if(!needApi())return;
  openModal(`<h3>Record Welfare</h3>
   <div class="field"><label>Member</label><select id="w_mem">${DATA.members.map(m=>`<option value="${m.id}">${m.no} - ${m.name}</option>`).join('')}</select></div>
   <div class="field"><label>Direction</label><select id="w_dir"><option value="in">Contribution (in)</option><option value="out">Benefit/Transfer (out)</option></select></div>
@@ -300,7 +300,7 @@ function welfareModal(){ if(\!needApi())return;
   <div class="modal-actions"><button class="btn gray" onclick="closeModal()">Cancel</button><button class="btn" onclick="saveWelfare()">Save</button></div>`);
 }
 async function saveWelfare(){try{await Api.recordWelfare({member_id:document.getElementById('w_mem').value,txn_date:document.getElementById('w_date').value,amount:+document.getElementById('w_amt').value,direction:document.getElementById('w_dir').value,purpose:'Welfare'});closeModal();toast('Welfare recorded');await reloadAndRender();}catch(e){toast(e.message);}}
-function loanModal(){ if(\!needApi())return;
+function loanModal(){ if(!needApi())return;
  openModal(`<h3>New Loan</h3>
   <div class="field"><label>Member</label><select id="l_mem">${DATA.members.map(m=>`<option value="${m.id}">${m.no} - ${m.name}</option>`).join('')}</select></div>
   <div class="field"><label>Loan No</label><input id="l_no" placeholder="e.g. L018-01"></div>
@@ -310,14 +310,14 @@ function loanModal(){ if(\!needApi())return;
   <div class="modal-actions"><button class="btn gray" onclick="closeModal()">Cancel</button><button class="btn" onclick="saveLoan()">Submit</button></div>`);
 }
 async function saveLoan(){try{await Api.applyLoan({loan_no:document.getElementById('l_no').value,member_id:document.getElementById('l_mem').value,principal:+document.getElementById('l_amt').value,interest_rate:+document.getElementById('l_rate').value,interest_mode:document.getElementById('l_mode').value});closeModal();toast('Loan submitted');await reloadAndRender();}catch(e){toast(e.message);}}
-function repayModal(id){ if(\!needApi())return; const l=DATA.loans.find(x=>x.id===id);
+function repayModal(id){ if(!needApi())return; const l=DATA.loans.find(x=>x.id===id);
  openModal(`<h3>Record Repayment</h3><div class="mini" style="margin-bottom:8px">${l.no} - balance ${money(l.balance)}</div>
   <div class="field"><label>Amount (GBP)</label><input id="rp_amt" type="number" value="${Math.min(300,l.balance)}"></div>
   <div class="field"><label>Date</label><input id="rp_date" type="date" value="${new Date().toISOString().slice(0,10)}"></div>
   <div class="modal-actions"><button class="btn gray" onclick="closeModal()">Cancel</button><button class="btn" onclick="saveRepay('${id}')">Save</button></div>`);
 }
 async function saveRepay(id){try{await Api.recordRepayment({loan_id:id,repay_date:document.getElementById('rp_date').value,amount:+document.getElementById('rp_amt').value,receipt_no:'REP-'+Date.now().toString().slice(-5)});closeModal();toast('Repayment recorded');await reloadAndRender();}catch(e){toast(e.message);}}
-function invModal(){ if(\!needApi())return;
+function invModal(){ if(!needApi())return;
  openModal(`<h3>Add Investment</h3>
   <div class="field"><label>Name</label><input id="i_name"></div>
   <div class="field"><label>Type</label><select id="i_type"><option>mmf</option><option>sacco</option><option>bank</option><option>tbill</option><option>shares</option><option>real_estate</option><option>other</option></select></div>
@@ -326,7 +326,7 @@ function invModal(){ if(\!needApi())return;
   <div class="modal-actions"><button class="btn gray" onclick="closeModal()">Cancel</button><button class="btn" onclick="saveInv()">Save</button></div>`);
 }
 async function saveInv(){try{await Api.addInvestment({name:document.getElementById('i_name').value,inv_type:document.getElementById('i_type').value,amount:+document.getElementById('i_amt').value,date_invested:document.getElementById('i_date').value});closeModal();toast('Investment added');await reloadAndRender();}catch(e){toast(e.message);}}
-function expModal(){ if(\!needApi())return;
+function expModal(){ if(!needApi())return;
  openModal(`<h3>Add Expense</h3>
   <div class="field"><label>Category</label><select id="e_cat"><option>banking</option><option>welfare</option><option>administration</option><option>membership</option><option>investments</option><option>other</option></select></div>
   <div class="field"><label>Description</label><input id="e_desc"></div>
@@ -335,7 +335,7 @@ function expModal(){ if(\!needApi())return;
   <div class="modal-actions"><button class="btn gray" onclick="closeModal()">Cancel</button><button class="btn" onclick="saveExp()">Save</button></div>`);
 }
 async function saveExp(){try{await Api.addExpense({category:document.getElementById('e_cat').value,description:document.getElementById('e_desc').value,amount:+document.getElementById('e_amt').value,expense_date:document.getElementById('e_date').value});closeModal();toast('Expense added');await reloadAndRender();}catch(e){toast(e.message);}}
-async function distribute(){ if(\!needApi())return; try{await Api.distributeProfit({source:'loan_interest',method:document.getElementById('pf_method').value,total_pool:+document.getElementById('pf_pool').value,distribution_date:new Date().toISOString().slice(0,10)});toast('Profit distributed');await reloadAndRender();}catch(e){toast(e.message);}}
+async function distribute(){ if(!needApi())return; try{await Api.distributeProfit({source:'loan_interest',method:document.getElementById('pf_method').value,total_pool:+document.getElementById('pf_pool').value,distribution_date:new Date().toISOString().slice(0,10)});toast('Profit distributed');await reloadAndRender();}catch(e){toast(e.message);}}
 function exportMembersCsv(){const rows=[['ID','Member','Status','Savings']];DATA.members.forEach(m=>rows.push([m.no,m.name,m.status,m.savings]));
  const csv=rows.map(r=>r.map(c=>{const s=String(c==null?'':c);return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;}).join(',')).join('\n');
  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='lifters_members.csv';a.click();}
