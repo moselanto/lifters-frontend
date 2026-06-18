@@ -1,7 +1,7 @@
 /* Lifters SACCO - API client
    Wraps fetch() with JWT auth. Configure API_BASE to your backend URL.
    Token is kept in localStorage so it survives page reloads. */
-const API_BASE = (window.LIFTERS_API_BASE || 'http://localhost:4000');
+function apiBase(){ return (window.LIFTERS_API_BASE || 'https://lifters-backend.onrender.com'); }
 
 const Api = {
   get token() { return localStorage.getItem('lifters_token') || ''; },
@@ -12,7 +12,7 @@ const Api = {
   async _req(method, path, body) {
     const headers = { 'Content-Type': 'application/json' };
     if (this.token) headers['Authorization'] = 'Bearer ' + this.token;
-    const res = await fetch(API_BASE + path, {
+    const res = await fetch(apiBase() + path, {
       method, headers, body: body ? JSON.stringify(body) : undefined,
     });
     if (res.status === 401) { this.logout(); throw new Error('Session expired - please sign in again'); }
