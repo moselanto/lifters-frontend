@@ -6,47 +6,58 @@
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',system-ui,Arial,sans-serif}
 body{background:var(--bg);color:var(--text)}
 #login{position:fixed;inset:0;background:linear-gradient(135deg,var(--navy),#0f1d38);display:flex;align-items:center;justify-content:center;z-index:100;padding:16px}
-.loginbox{background:#fff;border-radius:16px;padding:32px;width:380px;max-width:94vw;box-shadow:0 20px 60px rgba(0,0,0,.3)}
-.loginbox .logo{width:54px;height:54px;border-radius:13px;background:var(--green);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:24px;margin:0 auto 14px}
+.loginbox{background:#fff;border-radius:16px;padding:30px;width:380px;max-width:94vw;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.loginbox .logo{width:52px;height:52px;border-radius:13px;background:var(--green);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:23px;margin:0 auto 12px}
 .loginbox h2{text-align:center;color:var(--navy);font-size:18px}.loginbox p{text-align:center;color:var(--muted);font-size:12.5px;margin-bottom:14px}
 .loginbox label{display:block;font-size:12px;color:var(--muted);margin:10px 0 4px;font-weight:600}
 .loginbox input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:9px;font-size:13px;outline:none}
-.loginbox .btn{width:100%;margin-top:16px}.hint{font-size:11px;color:var(--muted);text-align:center;margin-top:10px}
+.loginbox .btn{width:100%;margin-top:14px}.hint{font-size:11px;color:var(--muted);text-align:center;margin-top:10px}
 .err{color:var(--red);font-size:12px;text-align:center;margin-top:8px;min-height:16px}
 .apibar{display:flex;gap:6px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:6px 9px;margin-bottom:6px}
 .apibar input{border:none;background:transparent;font-size:12px;flex:1;outline:none}
 .dot{width:9px;height:9px;border-radius:50%;background:#bbb}.dot.ok{background:var(--green)}.dot.bad{background:var(--red)}
 .app{display:none}.app.on{display:flex;min-height:100vh}
-.sidebar{width:235px;background:linear-gradient(180deg,var(--navy),#162a4d);color:#fff;position:fixed;inset:0 auto 0 0;display:flex;flex-direction:column;z-index:30}
-.brand{padding:18px;border-bottom:1px solid rgba(255,255,255,.12);display:flex;align-items:center;gap:10px}
-.brand .logo{width:36px;height:36px;border-radius:9px;background:var(--green);display:flex;align-items:center;justify-content:center;font-weight:800}
+.sidebar{width:230px;background:linear-gradient(180deg,var(--navy),#162a4d);color:#fff;position:fixed;inset:0 auto 0 0;display:flex;flex-direction:column;z-index:30;overflow-y:auto}
+.brand{padding:17px;border-bottom:1px solid rgba(255,255,255,.12);display:flex;align-items:center;gap:10px}
+.brand .logo{width:34px;height:34px;border-radius:9px;background:var(--green);display:flex;align-items:center;justify-content:center;font-weight:800}
 .brand h1{font-size:14px}.brand small{color:#9fb3d8;font-size:11px;font-weight:400}
-.nav a{display:flex;gap:11px;padding:11px 18px;color:#cdd8ef;font-size:13.5px;cursor:pointer;border-left:3px solid transparent}
+.nav .group{padding:9px 17px 3px;font-size:10px;letter-spacing:.08em;color:#7f96c4;text-transform:uppercase}
+.nav a{display:flex;gap:10px;padding:9px 17px;color:#cdd8ef;font-size:13px;cursor:pointer;border-left:3px solid transparent}
 .nav a:hover{background:rgba(255,255,255,.06);color:#fff}.nav a.active{background:rgba(22,167,102,.16);border-left-color:var(--green);color:#fff;font-weight:600}
-.main{margin-left:235px;flex:1;display:flex;flex-direction:column;min-width:0}
-.topbar{height:60px;background:var(--card);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 22px;position:sticky;top:0;z-index:20}
-.topbar .ttl{font-size:18px;font-weight:700;color:var(--navy)}
-.topbar .right{display:flex;align-items:center;gap:12px}
+.main{margin-left:230px;flex:1;display:flex;flex-direction:column;min-width:0}
+.topbar{height:58px;background:var(--card);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:sticky;top:0;z-index:20}
+.topbar .ttl{font-size:17px;font-weight:700;color:var(--navy)}
+.topbar .right{display:flex;align-items:center;gap:10px}
 .mode{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px}.mode.api{background:#e6f6ee;color:var(--green2)}.mode.demo{background:#fff6e0;color:#a6790a}
-.cur{display:flex;gap:6px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:13px}
+.cur{display:flex;gap:6px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:5px 9px;font-size:13px}
 .cur select{border:none;background:transparent;font-weight:600;color:var(--navy);cursor:pointer;outline:none}
-.lo{background:none;border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:12px;cursor:pointer;color:var(--muted)}
-.content{padding:22px;max-width:1240px;width:100%}
-.kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:15px;margin-bottom:20px}
-.kpi{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:15px 17px;position:relative;overflow:hidden}
-.kpi .lab{color:var(--muted);font-size:12px;margin-bottom:5px}.kpi .val{font-size:21px;font-weight:800;color:var(--navy)}
+.lo,.cp{background:none;border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:12px;cursor:pointer;color:var(--muted)}
+.content{padding:20px;max-width:1240px;width:100%}
+.kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:14px;margin-bottom:18px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:14px 16px;position:relative;overflow:hidden}
+.kpi .lab{color:var(--muted);font-size:12px;margin-bottom:5px}.kpi .val{font-size:20px;font-weight:800;color:var(--navy)}
 .kpi .bar{position:absolute;left:0;top:0;bottom:0;width:5px}.kpi.g .bar{background:var(--green)}.kpi.n .bar{background:var(--navy2)}.kpi.a .bar{background:var(--amber)}.kpi.r .bar{background:var(--red)}
-.panel{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:18px;margin-bottom:18px}
-.panel h3{font-size:14px;color:var(--navy);margin-bottom:14px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:17px;margin-bottom:16px}
+.panel h3{font-size:14px;color:var(--navy);margin-bottom:13px}
 table{width:100%;border-collapse:collapse;font-size:13px}
-th{text-align:left;color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;padding:10px;border-bottom:2px solid var(--line)}
-td{padding:10px;border-bottom:1px solid var(--line)}tr:hover td{background:#fafbfe}
+th{text-align:left;color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;padding:9px;border-bottom:2px solid var(--line)}
+td{padding:9px;border-bottom:1px solid var(--line)}tr:hover td{background:#fafbfe}
 .right{text-align:right}.b{font-weight:700}
 .tag{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px}.tag.cont{background:#e6f6ee;color:var(--green2)}.tag.exit{background:#fdeaea;color:var(--red)}.tag.join{background:#fff6e0;color:#a6790a}
-.btn{background:var(--green);color:#fff;border:none;padding:9px 15px;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer}.btn.gray{background:#e3e8f0;color:var(--navy)}
-.banner{font-size:12.5px;padding:9px 14px;border-radius:9px;margin-bottom:16px}
+.tag.ok{background:#e6f6ee;color:var(--green2)}.tag.out{background:#fff6e0;color:#a6790a}.tag.no{background:#eef1f8;color:var(--navy2)}
+.btn{background:var(--green);color:#fff;border:none;padding:9px 14px;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer}.btn.gray{background:#e3e8f0;color:var(--navy)}.btn.sm{padding:5px 10px;font-size:12px}.btn.alt{background:var(--navy)}
+.section-actions{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px;gap:10px;flex-wrap:wrap}
+.banner{font-size:12.5px;padding:9px 13px;border-radius:9px;margin-bottom:15px}
 .banner.api{background:#e6f6ee;border:1px solid #b6e3cc;color:#0f7a4a}.banner.demo{background:#fff6e0;border:1px solid #f0d98a;color:#7a5b00}
 .mini{font-size:11px;color:var(--muted)}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(15,23,42,.5);z-index:50;align-items:center;justify-content:center}.modal-bg.open{display:flex}
+.modal{background:#fff;border-radius:14px;padding:22px;width:430px;max-width:94vw;max-height:90vh;overflow:auto}.modal h3{color:var(--navy);margin-bottom:14px}
+.field{margin-bottom:11px}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px;font-weight:600}
+.field input,.field select{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;font-size:13px;outline:none}
+.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:16px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--navy);color:#fff;padding:11px 18px;border-radius:10px;font-size:13px;z-index:60;opacity:0;transition:.25s}.toast.show{opacity:1;transform:translateX(-50%)}
+.calc{background:var(--bg);border-radius:8px;padding:10px 12px;font-size:12.5px}.calc div{display:flex;justify-content:space-between;padding:2px 0}
+.loading{padding:30px;text-align:center;color:var(--muted);font-size:13px}
 @media(max-width:760px){.sidebar{display:none}.main{margin-left:0}}
 </style></head><body>
 
@@ -57,23 +68,21 @@ td{padding:10px;border-bottom:1px solid var(--line)}tr:hover td{background:#fafb
   <label>Password</label><input id="lg_pw" type="password" value="Lifters@2026">
   <button class="btn" onclick="doLogin()">Sign In</button>
   <div class="err" id="err"></div>
-  <div class="hint">Connects to your backend. If unreachable, you can <a href="#" onclick="demoLogin();return false">continue in demo mode</a> (local data).</div>
+  <div class="hint">Members: log in with your Member ID. If the backend is unreachable, <a href="#" onclick="demoLogin();return false">continue in demo mode</a>.</div>
 </div></div>
 
 <div class="app" id="app">
 <aside class="sidebar"><div class="brand"><div class="logo">L</div><div><h1>Lifters Group</h1><small>SACCO System</small></div></div>
-<nav class="nav">
-  <a data-page="dashboard" class="active">&#9632; Dashboard</a>
-  <a data-page="members">&#128101; Members</a>
-  <a data-page="savings">&#128176; Savings</a>
-  <a data-page="loans">&#127974; Loans</a>
-</nav></aside>
+<nav class="nav" id="nav"></nav></aside>
 <div class="main"><div class="topbar"><div class="ttl" id="ptitle">Dashboard</div>
   <div class="right"><span class="mode" id="modeBadge">-</span>
     <div class="cur">Currency<select id="cur" onchange="setCur(this.value)"><option>GBP</option><option>USD</option><option>KES</option></select></div>
+    <button class="cp" onclick="changePwModal()">Change Password</button>
     <button class="lo" onclick="logout()">Logout</button></div></div>
   <div class="content" id="content"></div>
 </div></div>
+<div class="modal-bg" id="mbg"><div class="modal" id="modal"></div></div>
+<div class="toast" id="toast"></div>
 
 <script src="api.js"></script>
 <script>
@@ -81,85 +90,256 @@ const SEED={"members": [{"id": "001", "name": "Jane Ngarari", "status": "Continu
 const RATES={GBP:1,USD:1.27,KES:172},SYM={GBP:'\u00A3',USD:'$',KES:'KSh '};let CUR='GBP';
 function money(g){return SYM[CUR]+((g||0)*RATES[CUR]).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});}
 function setCur(c){CUR=c;render(page);}
-let MODE='demo'; // 'api' or 'demo'
-let STATE={members:[],loans:[]};
-let page='dashboard';
-const titles={dashboard:'Dashboard',members:'Members',savings:'Savings',loans:'Loans'};
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2300);}
+function openModal(h){document.getElementById('modal').innerHTML=h;document.getElementById('mbg').classList.add('open');}
+function closeModal(){document.getElementById('mbg').classList.remove('open');}
+document.getElementById('mbg').addEventListener('click',e=>{if(e.target.id==='mbg')closeModal();});
 
-document.getElementById('apibase').value = (window.LIFTERS_API_BASE||'https://lifters-backend.onrender.com');
-async function ping(){
- window.LIFTERS_API_BASE=document.getElementById('apibase').value.trim();
- const dot=document.getElementById('dot');
- try{ const r=await fetch(window.LIFTERS_API_BASE+'/health'); const ok=r.ok; dot.className='dot '+(ok?'ok':'bad'); return ok; }
- catch{ dot.className='dot bad'; return false; }
-}
+let MODE='demo', ROLE='', MEMBERID='', page='dashboard';
+let DATA={members:[],loans:[],investments:[],expenses:[],welfare:[],bank:null,distributions:[]};
+const STAFF=['admin','chairman','secretary','treasurer','auditor'];
+const isStaff=()=>STAFF.includes((ROLE||'').toLowerCase());
+
+document.getElementById('apibase').value=(window.LIFTERS_API_BASE||'https://lifters-backend.onrender.com');
+async function ping(){window.LIFTERS_API_BASE=document.getElementById('apibase').value.trim();const dot=document.getElementById('dot');
+ try{const r=await fetch(window.LIFTERS_API_BASE+'/health');dot.className='dot '+(r.ok?'ok':'bad');return r.ok;}catch{dot.className='dot bad';return false;}}
+
 async function doLogin(){
  window.LIFTERS_API_BASE=document.getElementById('apibase').value.trim();
- const err=document.getElementById('err');err.textContent='';
+ const err=document.getElementById('err');err.textContent='Signing in...';
  try{
-   await Api.login(document.getElementById('lg_id').value, document.getElementById('lg_pw').value);
-   MODE='api'; await loadFromApi(); enterApp('API');
- }catch(e){ err.textContent=e.message+'  (or use demo mode below)'; }
+   const d=await Api.login(document.getElementById('lg_id').value.trim(),document.getElementById('lg_pw').value);
+   MODE='api';ROLE=d.role||'member';MEMBERID=d.member_id||'';
+   await loadAll();enterApp('API');err.textContent='';
+ }catch(e){err.textContent=e.message+'  (or use demo mode below)';}
 }
-function demoLogin(){ MODE='demo'; STATE=normalizeSeed(); enterApp('DEMO'); }
-function enterApp(label){
- document.getElementById('login').style.display='none';document.getElementById('app').classList.add('on');
+function demoLogin(){MODE='demo';ROLE='treasurer';MEMBERID='';buildDemo();enterApp('DEMO');}
+function enterApp(label){document.getElementById('login').style.display='none';document.getElementById('app').classList.add('on');
  const b=document.getElementById('modeBadge');b.textContent=label+' MODE';b.className='mode '+(label==='API'?'api':'demo');
- render('dashboard');
-}
-function logout(){ if(MODE==='api')Api.logout(); document.getElementById('app').classList.remove('on');document.getElementById('login').style.display='flex'; }
+ buildNav();render(isStaff()?'dashboard':'myaccount');}
+function logout(){if(MODE==='api')Api.logout();location.reload();}
 
-function normalizeSeed(){
- // map the demo seed into the same shape we use from the API
- const members=SEED.members.map(m=>({id:m.id,member_no:m.id,full_name:m.name,status:m.status,
-   savings:m.savings.reduce((a,s)=>a+(s.type==='fine'?-s.amount:s.amount),0),welfare:m.welfare,dividend:m.dividend||0}));
- const loans=SEED.loans.map(l=>({loan_no:l.loan_no,member:l.member,principal:l.principal,interest:l.interest,
-   net:l.net,repaid:l.repayments.reduce((a,r)=>a+r.amount,0),balance:l.principal-l.repayments.reduce((a,r)=>a+r.amount,0)}));
- return {members,loans};
+// ---------- data loading ----------
+async function loadAll(){
+ const tasks=[Api.members().catch(()=>[]),Api.loans().catch(()=>[]),Api.investments().catch(()=>[]),Api.expenses().catch(()=>[]),Api.bankPosition().catch(()=>null)];
+ const [members,loans,investments,expenses,bank]=await Promise.all(tasks);
+ // savings balances
+ let bal={};try{(await Api.savingsBalances()).forEach(b=>bal[b.member_id]=Number(b.savings_balance||0));}catch{}
+ DATA.members=(members||[]).map(m=>({id:m.id,no:m.member_no,name:m.full_name,status:m.status,phone:m.phone,email:m.email,savings:bal[m.id]||0}));
+ DATA.loans=(loans||[]).map(l=>({id:l.id,no:l.loan_no,member_id:l.member_id,principal:+l.principal,interest:+l.interest_amount,net:+l.net_disbursed,repaid:+(l.repaid||0),balance:+(l.balance||0),status:l.status}));
+ DATA.investments=(investments||[]).map(i=>({id:i.id,name:i.name,type:i.inv_type,amount:+i.amount,expected:+(i.expected_return||0),actual:+(i.actual_return||0),status:i.status}));
+ DATA.expenses=(expenses||[]).map(e=>({cat:e.category||e.category_id,desc:e.description,amount:+e.amount,date:e.expense_date}));
+ DATA.bank=bank;
 }
-async function loadFromApi(){
- // pull members + savings balances + loans and merge into STATE
- const [members, balances, loans] = await Promise.all([Api.members(), Api.savingsBalances(), Api.loans()]);
- const balById={}; balances.forEach(b=>balById[b.member_id]=Number(b.savings_balance||0));
- STATE.members = members.map(m=>({id:m.id,member_no:m.member_no,full_name:m.full_name,status:m.status,
-   savings:balById[m.id]||0,welfare:0,dividend:0}));
- STATE.loans = loans.map(l=>({loan_no:l.loan_no,member:l.member_id,principal:Number(l.principal),
-   interest:Number(l.interest_amount),net:Number(l.net_disbursed),repaid:Number(l.repaid||0),balance:Number(l.balance||0)}));
+function buildDemo(){
+ DATA.members=SEED.members.map(m=>({id:m.id,no:m.id,name:m.name,status:m.status,phone:'',email:'',savings:m.savings.reduce((a,s)=>a+(s.type==='fine'?-s.amount:s.amount),0),welfare:m.welfare,dividend:m.dividend||0}));
+ DATA.loans=SEED.loans.map(l=>({no:l.loan_no,member_id:l.member,principal:l.principal,interest:l.interest,net:l.net,repaid:l.repayments.reduce((a,r)=>a+r.amount,0),balance:l.principal-l.repayments.reduce((a,r)=>a+r.amount,0),status:l.status}));
+ DATA.investments=SEED.investments.map(i=>({name:i.name,type:i.type,amount:i.amount+i.fee,expected:0,actual:0,status:i.status}));
+ DATA.expenses=SEED.expenses.map(e=>({cat:e.cat,desc:e.desc,amount:e.amount,date:e.date}));
 }
 
-function statusTag(s){if((s||'').indexOf('xit')>=0||s==='exited')return '<span class="tag exit">Exited</span>';if((s||'').indexOf('oin')>=0||s==='new')return '<span class="tag join">New</span>';return '<span class="tag cont">Continuing</span>';}
+// ---------- nav ----------
+function buildNav(){
+ const nav=document.getElementById('nav');
+ if(isStaff()){
+   nav.innerHTML=`<div class="group">Admin</div>
+   ${navlink('dashboard','&#9632; Dashboard')}${navlink('members','&#128101; Members')}${navlink('savings','&#128176; Savings')}
+   ${navlink('welfare','&#10084; Welfare')}${navlink('loans','&#127974; Loans')}${navlink('repay','&#128181; Repayments')}
+   ${navlink('investments','&#128200; Investments')}${navlink('expenses','&#129534; Expenses')}${navlink('profit','&#127873; Profit Sharing')}
+   ${navlink('reports','&#128202; Reports')}`;
+ } else {
+   nav.innerHTML=`<div class="group">Member Portal</div>${navlink('myaccount','&#128100; My Account')}${navlink('myloans','&#127974; My Loans')}`;
+ }
+ nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.querySelectorAll('a').forEach(x=>x.classList.remove('active'));a.classList.add('active');render(a.dataset.page);}));
+}
+function navlink(p,label){return `<a data-page="${p}">${label}</a>`;}
+
+// ---------- helpers ----------
 const sum=(arr,f)=>arr.reduce((a,x)=>a+(f(x)||0),0);
+function statusTag(s){s=(s||'').toLowerCase();if(s.indexOf('exit')>=0)return '<span class="tag exit">Exited</span>';if(s.indexOf('join')>=0||s==='new')return '<span class="tag join">New</span>';return '<span class="tag cont">Continuing</span>';}
 function kpi(c,l,v){return `<div class="kpi ${c}"><div class="bar"></div><div class="lab">${l}</div><div class="val">${v}</div></div>`;}
+function memberName(id){const m=DATA.members.find(x=>x.id===id||x.no===id);return m?m.name:id;}
 
+// ---------- pages ----------
+const titles={dashboard:'Dashboard',members:'Members',savings:'Savings',welfare:'Welfare',loans:'Loans',repay:'Repayments',investments:'Investments',expenses:'Expenses',profit:'Profit Sharing',reports:'Reports',myaccount:'My Account',myloans:'My Loans'};
 function dashboard(){
- const t={contrib:sum(STATE.members,m=>m.savings),welfare:sum(STATE.members,m=>m.welfare),
-   balance:sum(STATE.loans,l=>l.balance),interest:sum(STATE.loans,l=>l.interest)};
- return `<div class="banner ${MODE}">${MODE==='api'?'&#9989; Connected to the live backend API - data is shared across all users.':'&#9888; Demo mode - using local sample data (backend not connected).'}</div>
- <div class="kpis">${kpi('n','Total Members',STATE.members.length)}${kpi('g','Total Savings',money(t.contrib))}${kpi('a','Outstanding Loans',money(t.balance))}${kpi('n','Loan Interest',money(t.interest))}</div>
+ const t={contrib:sum(DATA.members,m=>m.savings),balance:sum(DATA.loans,l=>l.balance),interest:sum(DATA.loans,l=>l.interest),invest:sum(DATA.investments,i=>i.amount),exp:sum(DATA.expenses,e=>e.amount)};
+ const active=DATA.members.filter(m=>(m.status||'').toLowerCase().indexOf('cont')>=0).length;
+ return `<div class="banner ${MODE}">${MODE==='api'?'&#9989; Connected to the live backend API - data is shared across all users.':'&#9888; Demo mode - local sample data.'}</div>
+ <div class="kpis">${kpi('n','Total Members',DATA.members.length)}${kpi('g','Total Savings',money(t.contrib))}${kpi('a','Outstanding Loans',money(t.balance))}${kpi('n','Loan Interest',money(t.interest))}${kpi('n','Investments',money(t.invest))}${kpi('r','Expenses',money(t.exp))}</div>
  <div class="panel"><h3>Members</h3><table><thead><tr><th>ID</th><th>Member</th><th>Status</th><th class="right">Savings</th></tr></thead><tbody>
- ${STATE.members.slice(0,10).map(m=>`<tr><td>${m.member_no}</td><td class="b">${m.full_name}</td><td>${statusTag(m.status)}</td><td class="right">${money(m.savings)}</td></tr>`).join('')}
+ ${DATA.members.slice(0,10).map(m=>`<tr><td>${m.no}</td><td class="b">${m.name}</td><td>${statusTag(m.status)}</td><td class="right">${money(m.savings)}</td></tr>`).join('')}
  </tbody></table></div>`;
 }
 function membersPage(){
- return `<div class="panel"><h3>Members (${STATE.members.length})</h3><table><thead><tr><th>ID</th><th>Member</th><th>Status</th><th class="right">Savings</th></tr></thead><tbody>
- ${STATE.members.map(m=>`<tr><td>${m.member_no}</td><td class="b">${m.full_name}</td><td>${statusTag(m.status)}</td><td class="right">${money(m.savings)}</td></tr>`).join('')}
+ return `<div class="section-actions"><div class="mini">${DATA.members.length} members</div>${isStaff()?'<button class="btn" onclick="memberModal()">+ Add Member</button>':''}</div>
+ <div class="panel"><table><thead><tr><th>ID</th><th>Member</th><th>Status</th><th>Phone</th><th class="right">Savings</th></tr></thead><tbody>
+ ${DATA.members.map(m=>`<tr><td>${m.no}</td><td class="b">${m.name}</td><td>${statusTag(m.status)}</td><td class="mini">${m.phone||'-'}</td><td class="right">${money(m.savings)}</td></tr>`).join('')}
  </tbody></table></div>`;
 }
 function savingsPage(){
- const tot=sum(STATE.members,m=>m.savings);
- return `<div class="kpis">${kpi('g','Total Savings',money(tot))}</div>
+ const tot=sum(DATA.members,m=>m.savings);
+ return `<div class="section-actions"><div class="kpis" style="margin:0"><div class="kpi g" style="min-width:200px"><div class="bar"></div><div class="lab">Total Savings</div><div class="val">${money(tot)}</div></div></div><button class="btn" onclick="contribModal()">+ Record Contribution</button></div>
  <div class="panel"><table><thead><tr><th>ID</th><th>Member</th><th class="right">Savings</th></tr></thead><tbody>
- ${STATE.members.map(m=>`<tr><td>${m.member_no}</td><td class="b">${m.full_name}</td><td class="right">${money(m.savings)}</td></tr>`).join('')}
- </tbody></table></div>`;
+ ${DATA.members.map(m=>`<tr><td>${m.no}</td><td class="b">${m.name}</td><td class="right">${money(m.savings)}</td></tr>`).join('')}
+ <tr><td></td><td class="b">TOTAL</td><td class="right b">${money(tot)}</td></tr></tbody></table></div>`;
+}
+function welfarePage(){
+ return `<div class="panel"><h3>Welfare</h3><div class="section-actions"><div class="mini">Record welfare contributions or transfers out.</div><button class="btn" onclick="welfareModal()">+ Record Welfare</button></div>
+ <div class="mini">Welfare balances load from the backend. Use the button to post a welfare contribution (in) or benefit (out).</div></div>`;
 }
 function loansPage(){
- return `<div class="kpis">${kpi('n','Total Principal',money(sum(STATE.loans,l=>l.principal)))}${kpi('g','Repaid',money(sum(STATE.loans,l=>l.repaid)))}${kpi('a','Outstanding',money(sum(STATE.loans,l=>l.balance)))}</div>
- <div class="panel"><table><thead><tr><th>Loan</th><th class="right">Principal</th><th class="right">Interest</th><th class="right">Repaid</th><th class="right">Balance</th></tr></thead><tbody>
- ${STATE.loans.map(l=>`<tr><td>${l.loan_no}</td><td class="right">${money(l.principal)}</td><td class="right">${money(l.interest)}</td><td class="right">${money(l.repaid)}</td><td class="right b">${money(l.balance)}</td></tr>`).join('')}
+ const t={p:sum(DATA.loans,l=>l.principal),r:sum(DATA.loans,l=>l.repaid),b:sum(DATA.loans,l=>l.balance),i:sum(DATA.loans,l=>l.interest)};
+ return `<div class="kpis">${kpi('n','Principal',money(t.p))}${kpi('g','Repaid',money(t.r))}${kpi('a','Outstanding',money(t.b))}${kpi('n','Interest',money(t.i))}</div>
+ <div class="section-actions"><div class="mini">${DATA.loans.length} loans</div><button class="btn" onclick="loanModal()">+ New Loan</button></div>
+ <div class="panel"><table><thead><tr><th>Loan</th><th>Member</th><th class="right">Principal</th><th class="right">Interest</th><th class="right">Repaid</th><th class="right">Balance</th><th>Status</th><th></th></tr></thead><tbody>
+ ${DATA.loans.map(l=>`<tr><td>${l.no}</td><td class="b">${memberName(l.member_id)}</td><td class="right">${money(l.principal)}</td><td class="right">${money(l.interest)}</td><td class="right">${money(l.repaid)}</td><td class="right b">${money(l.balance)}</td><td>${l.balance<=0?'<span class="tag ok">Cleared</span>':'<span class="tag out">'+(l.status||'repaying')+'</span>'}</td>
+   <td class="right">${(MODE==='api'&&l.balance>0)?`<button class="btn sm" onclick="repayModal('${l.id}')">Repay</button>`:''}</td></tr>`).join('')}
  </tbody></table></div>`;
 }
-const pages={dashboard,members:membersPage,savings:savingsPage,loans:loansPage};
-function render(p){page=p;document.getElementById('content').innerHTML=pages[p]();document.getElementById('ptitle').textContent=titles[p];}
-document.querySelectorAll('.nav a').forEach(a=>a.addEventListener('click',()=>{document.querySelectorAll('.nav a').forEach(x=>x.classList.remove('active'));a.classList.add('active');render(a.dataset.page);}));
+function repayPage(){
+ const rows=DATA.loans.filter(l=>l.repaid>0);
+ return `<div class="kpis">${kpi('g','Total Repaid',money(sum(DATA.loans,l=>l.repaid)))}${kpi('a','Outstanding',money(sum(DATA.loans,l=>l.balance)))}</div>
+ <div class="panel"><h3>Repayments by Loan</h3><table><thead><tr><th>Loan</th><th>Member</th><th class="right">Repaid</th><th class="right">Balance</th></tr></thead><tbody>
+ ${rows.map(l=>`<tr><td>${l.no}</td><td class="b">${memberName(l.member_id)}</td><td class="right">${money(l.repaid)}</td><td class="right">${money(l.balance)}</td></tr>`).join('')}
+ </tbody></table><div class="mini" style="margin-top:8px">Record a repayment from the Loans tab (Repay button).</div></div>`;
+}
+function investmentsPage(){
+ return `<div class="kpis">${kpi('n','Total Invested',money(sum(DATA.investments,i=>i.amount)))}${kpi('g','Returns',money(sum(DATA.investments,i=>i.actual)))}</div>
+ <div class="section-actions"><div class="mini">${DATA.investments.length} investments</div><button class="btn" onclick="invModal()">+ Add Investment</button></div>
+ <div class="panel"><table><thead><tr><th>Name</th><th>Type</th><th class="right">Amount</th><th class="right">Actual Return</th><th>Status</th></tr></thead><tbody>
+ ${DATA.investments.map(i=>`<tr><td class="b">${i.name}</td><td>${(i.type||'').toUpperCase()}</td><td class="right">${money(i.amount)}</td><td class="right">${money(i.actual)}</td><td><span class="tag ok">${i.status}</span></td></tr>`).join('')}
+ </tbody></table></div>`;
+}
+function expensesPage(){
+ const tot=sum(DATA.expenses,e=>e.amount);
+ return `<div class="section-actions"><div class="kpis" style="margin:0"><div class="kpi r" style="min-width:200px"><div class="bar"></div><div class="lab">Total Expenses</div><div class="val">${money(tot)}</div></div></div><button class="btn" onclick="expModal()">+ Add Expense</button></div>
+ <div class="panel"><table><thead><tr><th>Category</th><th>Description</th><th>Date</th><th class="right">Amount</th></tr></thead><tbody>
+ ${DATA.expenses.map(e=>`<tr><td><span class="tag no">${e.cat}</span></td><td>${e.desc}</td><td class="mini">${e.date||'-'}</td><td class="right">${money(e.amount)}</td></tr>`).join('')}
+ <tr><td></td><td class="b">TOTAL</td><td></td><td class="right b">${money(tot)}</td></tr></tbody></table></div>`;
+}
+function profitPage(){
+ return `<div class="panel"><h3>Profit Sharing</h3>
+ <div class="section-actions"><div class="mini">Distribute loan interest as dividends.</div></div>
+ <div class="calc" style="margin-bottom:12px"><div><span>Loan interest earned</span><b>${money(sum(DATA.loans,l=>l.interest))}</b></div><div><span>Eligible members</span><b>${DATA.members.filter(m=>(m.status||'').toLowerCase().indexOf('join')<0&&(m.status||'').toLowerCase()\!=='new').length}</b></div></div>
+ <div class="field"><label>Method</label><select id="pf_method"><option value="equal">Equal</option><option value="share_based">Share-based</option><option value="savings_based">Savings-based</option></select></div>
+ <div class="field"><label>Total Pool (GBP)</label><input id="pf_pool" type="number" value="2760"></div>
+ <button class="btn" onclick="distribute()">Distribute Profit</button></div>`;
+}
+function reportsPage(){
+ const b=DATA.bank;
+ return `<div class="panel"><h3>Bank / Cash Position</h3>
+ ${b?`<div class="calc"><div><span>Total contributions</span><b>${money(+b.total_contributions)}</b></div><div><span>Welfare balance</span><b>${money(+b.welfare_balance)}</b></div><div><span>Interest earned</span><b>${money(+b.interest_earned)}</b></div><div><span>Dividends paid</span><b>${money(+b.dividends_paid)}</b></div><div><span>Expenses</span><b>${money(+b.total_expenses)}</b></div><div><span>Investments out</span><b>${money(+b.investments_out)}</b></div><div style="border-top:1px solid var(--line);margin-top:6px;padding-top:6px"><span class="b">Cash in bank</span><b>${money(+b.cash_in_bank)}</b></div></div>`:'<div class="mini">Bank position loads from the backend (staff only).</div>'}
+ <div style="margin-top:12px"><button class="btn alt" onclick="window.print()">Print / PDF</button> <button class="btn gray" onclick="exportMembersCsv()">Export Members CSV</button></div></div>`;
+}
+// ---- member portal ----
+function myaccount(){
+ const me=DATA.members.find(m=>m.id===MEMBERID)||{name:'Member',savings:0,welfare:0};
+ const myLoans=DATA.loans.filter(l=>l.member_id===MEMBERID);
+ const bal=sum(myLoans,l=>l.balance);
+ return `<div class="banner api">&#128274; You are viewing your own account only.</div>
+ <div class="kpis">${kpi('g','My Savings',money(me.savings))}${kpi('g','Welfare',money(me.welfare||0))}${kpi('a','Loan Balance',money(bal))}${kpi('n','My Loans',myLoans.length)}</div>
+ <div class="panel"><h3>${me.name} - Summary</h3><table><tbody>
+  <tr><td>Member ID</td><td class="right b">${me.no||MEMBERID}</td></tr>
+  <tr><td>Status</td><td class="right">${me.status||'-'}</td></tr>
+  <tr><td>Total Savings</td><td class="right b">${money(me.savings)}</td></tr>
+  <tr><td>Loan Balance</td><td class="right">${money(bal)}</td></tr>
+ </tbody></table><div style="margin-top:10px"><button class="btn alt" onclick="window.print()">Print Statement</button></div></div>`;
+}
+function myloans(){
+ const myLoans=DATA.loans.filter(l=>l.member_id===MEMBERID);
+ if(\!myLoans.length)return '<div class="panel"><h3>My Loans</h3><div class="mini">You have no loans on record.</div></div>';
+ return myLoans.map(l=>`<div class="panel"><h3>${l.no} ${l.balance<=0?'<span class="tag ok">Cleared</span>':'<span class="tag out">Outstanding</span>'}</h3>
+  <div class="calc"><div><span>Principal</span><b>${money(l.principal)}</b></div><div><span>Interest</span><b>${money(l.interest)}</b></div><div><span>Net received</span><b>${money(l.net)}</b></div><div><span>Repaid</span><b>${money(l.repaid)}</b></div><div><span>Balance</span><b>${money(l.balance)}</b></div></div></div>`).join('');
+}
+const pages={dashboard,members:membersPage,savings:savingsPage,welfare:welfarePage,loans:loansPage,repay:repayPage,investments:investmentsPage,expenses:expensesPage,profit:profitPage,reports:reportsPage,myaccount,myloans};
+function render(p){page=p;const fn=pages[p]||dashboard;document.getElementById('content').innerHTML=fn();document.getElementById('ptitle').textContent=titles[p]||'Dashboard';}
+
+// ---------- actions (API writes; demo shows a notice) ----------
+function needApi(){ if(MODE\!=='api'){toast('Demo mode - connect to the backend to save changes');return false;} return true; }
+async function reloadAndRender(){ await loadAll(); render(page); }
+
+function changePwModal(){
+ openModal(`<h3>Change Password</h3>
+  <div class="field"><label>Current Password</label><input id="cp_old" type="password"></div>
+  <div class="field"><label>New Password</label><input id="cp_new" type="password"></div>
+  <div class="field"><label>Confirm New Password</label><input id="cp_new2" type="password"></div>
+  <div class="modal-actions"><button class="btn gray" onclick="closeModal()">Cancel</button><button class="btn" onclick="saveChangePw()">Update Password</button></div>`);
+}
+async function saveChangePw(){
+ const o=document.getElementById('cp_old').value,n=document.getElementById('cp_new').value,n2=document.getElementById('cp_new2').value;
+ if(\!n||n.length<6){toast('New password must be at least 6 characters');return;}
+ if(n\!==n2){toast('New passwords do not match');return;}
+ if(MODE\!=='api'){toast('Demo mode - password change needs the live backend');return;}
+ try{ await Api.post('/auth/change-password',{old_password:o,new_password:n}); closeModal(); toast('Password updated successfully'); }
+ catch(e){ toast(e.message); }
+}
+function memberModal(){ if(\!needApi())return; const nid='';
+ openModal(`<h3>Add Member</h3>
+  <div class="field"><label>Member No</label><input id="m_no" placeholder="e.g. 018"></div>
+  <div class="field"><label>Full Name</label><input id="m_name"></div>
+  <div class="field"><label>Phone</label><input id="m_phone"></div>
+  <div class="field"><label>Status</label><select id="m_status"><option value="new">New</option><option value="continuing">Continuing</option></select></div>
+  <div class="modal-actions"><button class="btn gray" onclick="closeModal()">Cancel</button><button class="btn" onclick="saveMember()">Save</button></div>`);
+}
+async function saveMember(){try{await Api.createMember({member_no:document.getElementById('m_no').value,full_name:document.getElementById('m_name').value,phone:document.getElementById('m_phone').value,status:document.getElementById('m_status').value});closeModal();toast('Member added');await reloadAndRender();}catch(e){toast(e.message);}}
+function contribModal(){ if(\!needApi())return;
+ openModal(`<h3>Record Contribution</h3>
+  <div class="field"><label>Member</label><select id="c_mem">${DATA.members.map(m=>`<option value="${m.id}">${m.no} - ${m.name}</option>`).join('')}</select></div>
+  <div class="field"><label>Amount (GBP)</label><input id="c_amt" type="number" value="100"></div>
+  <div class="field"><label>Date</label><input id="c_date" type="date" value="${new Date().toISOString().slice(0,10)}"></div>
+  <div class="modal-actions"><button class="btn gray" onclick="closeModal()">Cancel</button><button class="btn" onclick="saveContrib()">Save</button></div>`);
+}
+async function saveContrib(){try{const d=document.getElementById('c_date').value;await Api.recordContribution({member_id:document.getElementById('c_mem').value,txn_date:d,period_month:d.slice(0,8)+'01',amount:+document.getElementById('c_amt').value,type:'contribution',receipt_no:'RC-'+Date.now().toString().slice(-5)});closeModal();toast('Contribution recorded');await reloadAndRender();}catch(e){toast(e.message);}}
+function welfareModal(){ if(\!needApi())return;
+ openModal(`<h3>Record Welfare</h3>
+  <div class="field"><label>Member</label><select id="w_mem">${DATA.members.map(m=>`<option value="${m.id}">${m.no} - ${m.name}</option>`).join('')}</select></div>
+  <div class="field"><label>Direction</label><select id="w_dir"><option value="in">Contribution (in)</option><option value="out">Benefit/Transfer (out)</option></select></div>
+  <div class="field"><label>Amount (GBP)</label><input id="w_amt" type="number" value="10"></div>
+  <div class="field"><label>Date</label><input id="w_date" type="date" value="${new Date().toISOString().slice(0,10)}"></div>
+  <div class="modal-actions"><button class="btn gray" onclick="closeModal()">Cancel</button><button class="btn" onclick="saveWelfare()">Save</button></div>`);
+}
+async function saveWelfare(){try{await Api.recordWelfare({member_id:document.getElementById('w_mem').value,txn_date:document.getElementById('w_date').value,amount:+document.getElementById('w_amt').value,direction:document.getElementById('w_dir').value,purpose:'Welfare'});closeModal();toast('Welfare recorded');await reloadAndRender();}catch(e){toast(e.message);}}
+function loanModal(){ if(\!needApi())return;
+ openModal(`<h3>New Loan</h3>
+  <div class="field"><label>Member</label><select id="l_mem">${DATA.members.map(m=>`<option value="${m.id}">${m.no} - ${m.name}</option>`).join('')}</select></div>
+  <div class="field"><label>Loan No</label><input id="l_no" placeholder="e.g. L018-01"></div>
+  <div class="field"><label>Principal (GBP)</label><input id="l_amt" type="number" value="1000"></div>
+  <div class="field"><label>Interest Rate %</label><input id="l_rate" type="number" value="10"></div>
+  <div class="field"><label>Mode</label><select id="l_mode"><option value="upfront_deduct">Deduct before disbursement</option><option value="add_after">Add after disbursement</option></select></div>
+  <div class="modal-actions"><button class="btn gray" onclick="closeModal()">Cancel</button><button class="btn" onclick="saveLoan()">Submit</button></div>`);
+}
+async function saveLoan(){try{await Api.applyLoan({loan_no:document.getElementById('l_no').value,member_id:document.getElementById('l_mem').value,principal:+document.getElementById('l_amt').value,interest_rate:+document.getElementById('l_rate').value,interest_mode:document.getElementById('l_mode').value});closeModal();toast('Loan submitted');await reloadAndRender();}catch(e){toast(e.message);}}
+function repayModal(id){ if(\!needApi())return; const l=DATA.loans.find(x=>x.id===id);
+ openModal(`<h3>Record Repayment</h3><div class="mini" style="margin-bottom:8px">${l.no} - balance ${money(l.balance)}</div>
+  <div class="field"><label>Amount (GBP)</label><input id="rp_amt" type="number" value="${Math.min(300,l.balance)}"></div>
+  <div class="field"><label>Date</label><input id="rp_date" type="date" value="${new Date().toISOString().slice(0,10)}"></div>
+  <div class="modal-actions"><button class="btn gray" onclick="closeModal()">Cancel</button><button class="btn" onclick="saveRepay('${id}')">Save</button></div>`);
+}
+async function saveRepay(id){try{await Api.recordRepayment({loan_id:id,repay_date:document.getElementById('rp_date').value,amount:+document.getElementById('rp_amt').value,receipt_no:'REP-'+Date.now().toString().slice(-5)});closeModal();toast('Repayment recorded');await reloadAndRender();}catch(e){toast(e.message);}}
+function invModal(){ if(\!needApi())return;
+ openModal(`<h3>Add Investment</h3>
+  <div class="field"><label>Name</label><input id="i_name"></div>
+  <div class="field"><label>Type</label><select id="i_type"><option>mmf</option><option>sacco</option><option>bank</option><option>tbill</option><option>shares</option><option>real_estate</option><option>other</option></select></div>
+  <div class="field"><label>Amount (GBP)</label><input id="i_amt" type="number" value="1000"></div>
+  <div class="field"><label>Date Invested</label><input id="i_date" type="date" value="${new Date().toISOString().slice(0,10)}"></div>
+  <div class="modal-actions"><button class="btn gray" onclick="closeModal()">Cancel</button><button class="btn" onclick="saveInv()">Save</button></div>`);
+}
+async function saveInv(){try{await Api.addInvestment({name:document.getElementById('i_name').value,inv_type:document.getElementById('i_type').value,amount:+document.getElementById('i_amt').value,date_invested:document.getElementById('i_date').value});closeModal();toast('Investment added');await reloadAndRender();}catch(e){toast(e.message);}}
+function expModal(){ if(\!needApi())return;
+ openModal(`<h3>Add Expense</h3>
+  <div class="field"><label>Category</label><select id="e_cat"><option>banking</option><option>welfare</option><option>administration</option><option>membership</option><option>investments</option><option>other</option></select></div>
+  <div class="field"><label>Description</label><input id="e_desc"></div>
+  <div class="field"><label>Amount (GBP)</label><input id="e_amt" type="number" value="50"></div>
+  <div class="field"><label>Date</label><input id="e_date" type="date" value="${new Date().toISOString().slice(0,10)}"></div>
+  <div class="modal-actions"><button class="btn gray" onclick="closeModal()">Cancel</button><button class="btn" onclick="saveExp()">Save</button></div>`);
+}
+async function saveExp(){try{await Api.addExpense({category:document.getElementById('e_cat').value,description:document.getElementById('e_desc').value,amount:+document.getElementById('e_amt').value,expense_date:document.getElementById('e_date').value});closeModal();toast('Expense added');await reloadAndRender();}catch(e){toast(e.message);}}
+async function distribute(){ if(\!needApi())return; try{await Api.distributeProfit({source:'loan_interest',method:document.getElementById('pf_method').value,total_pool:+document.getElementById('pf_pool').value,distribution_date:new Date().toISOString().slice(0,10)});toast('Profit distributed');await reloadAndRender();}catch(e){toast(e.message);}}
+function exportMembersCsv(){const rows=[['ID','Member','Status','Savings']];DATA.members.forEach(m=>rows.push([m.no,m.name,m.status,m.savings]));
+ const csv=rows.map(r=>r.map(c=>{const s=String(c==null?'':c);return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;}).join(',')).join('\n');
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='lifters_members.csv';a.click();}
+
 ping();
+document.getElementById('lg_pw').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
 </script></body></html>
