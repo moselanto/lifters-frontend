@@ -121,15 +121,27 @@ function logout(){if(MODE==='api')Api.logout();location.reload();}
 
 // ---------- data loading ----------
 async function loadAll(){
- const tasks=[Api.members().catch(()=>[]),Api.loans().catch(()=>[]),Api.investments().catch(()=>[]),Api.expenses().catch(()=>[]),Api.bankPosition().catch(()=>null)];
- const [members,loans,investments,expenses,bank]=await Promise.all(tasks);
- // savings balances
- let bal={};try{(await Api.savingsBalances()).forEach(b=>bal[b.member_id]=Number(b.savings_balance||0));}catch{}
- DATA.members=(members||[]).map(m=>({id:m.id,no:m.member_no,name:m.full_name,status:m.status,phone:m.phone,email:m.email,savings:bal[m.id]||0}));
- DATA.loans=(loans||[]).map(l=>({id:l.id,no:l.loan_no,member_id:l.member_id,principal:+l.principal,interest:+l.interest_amount,net:+l.net_disbursed,repaid:+(l.repaid||0),balance:+(l.balance||0),status:l.status}));
- DATA.investments=(investments||[]).map(i=>({id:i.id,name:i.name,type:i.inv_type,amount:+i.amount,expected:+(i.expected_return||0),actual:+(i.actual_return||0),status:i.status}));
- DATA.expenses=(expenses||[]).map(e=>({cat:e.category||e.category_id,desc:e.description,amount:+e.amount,date:e.expense_date}));
- DATA.bank=bank;
+ if(isStaff()){
+   const tasks=[Api.members().catch(()=>[]),Api.loans().catch(()=>[]),Api.investments().catch(()=>[]),Api.expenses().catch(()=>[]),Api.bankPosition().catch(()=>null)];
+   const [members,loans,investments,expenses,bank]=await Promise.all(tasks);
+   let bal={};try{(await Api.savingsBalances()).forEach(b=>bal[b.member_id]=Number(b.savings_balance||0));}catch{}
+   DATA.members=(members||[]).map(m=>({id:m.id,no:m.member_no,name:m.full_name,status:m.status,phone:m.phone,email:m.email,savings:bal[m.id]||0}));
+   DATA.loans=(loans||[]).map(l=>({id:l.id,no:l.loan_no,member_id:l.member_id,principal:+l.principal,interest:+l.interest_amount,net:+l.net_disbursed,repaid:+(l.repaid||0),balance:+(l.balance||0),status:l.status}));
+   DATA.investments=(investments||[]).map(i=>({id:i.id,name:i.name,type:i.inv_type,amount:+i.amount,expected:+(i.expected_return||0),actual:+(i.actual_return||0),status:i.status}));
+   DATA.expenses=(expenses||[]).map(e=>({cat:e.category||e.category_id,desc:e.description,amount:+e.amount,date:e.expense_date}));
+   DATA.bank=bank;
+ } else {
+   const me=await Api.member(MEMBERID).catch(()=>null);
+   let savings=[];try{savings=await Api.savingsHistory(MEMBERID);}catch(e){}
+   let welfare=0;try{(await Api.welfareBalances()).forEach(w=>{if(w.member_id===MEMBERID)welfare=Number(w.welfare_balance||0);});}catch(e){}
+   let myloans=[];try{myloans=await Api.memberLoans(MEMBERID);}catch(e){}
+   let divs=[];try{divs=await Api.memberDividends(MEMBERID);}catch(e){}
+   const savT=(savings||[]).reduce((a,s)=>a+(s.type==='fine'?-Number(s.amount):Number(s.amount)),0);
+   const divT=(divs||[]).reduce((a,d)=>a+Number(d.amount||0),0);
+   DATA.members=me?[{id:me.id,no:me.member_no,name:me.full_name,status:me.status,phone:me.phone,email:me.email,savings:savT,welfare:welfare,dividend:divT}]:[];
+   DATA.loans=(myloans||[]).map(l=>({id:l.id,no:l.loan_no,member_id:l.member_id,principal:+l.principal,interest:+l.interest_amount,net:+l.net_disbursed,repaid:+(l.repaid||0),balance:+(l.balance||0),status:l.status}));
+   DATA.investments=[];DATA.expenses=[];DATA.bank=null;
+ }
 }
 function buildDemo(){
  DATA.members=SEED.members.map(m=>({id:m.id,no:m.id,name:m.name,status:m.status,phone:'',email:'',savings:m.savings.reduce((a,s)=>a+(s.type==='fine'?-s.amount:s.amount),0),welfare:m.welfare,dividend:m.dividend||0}));
@@ -234,7 +246,7 @@ function reportsPage(){
 }
 // ---- member portal ----
 function myaccount(){
- const me=DATA.members.find(m=>m.id===MEMBERID)||{name:'Member',savings:0,welfare:0};
+ const me=DATA.members[0]||{name:'Member',savings:0,welfare:0,no:MEMBERID,status:'-'};
  const myLoans=DATA.loans.filter(l=>l.member_id===MEMBERID);
  const bal=sum(myLoans,l=>l.balance);
  return `<div class="banner api">&#128274; You are viewing your own account only.</div>
